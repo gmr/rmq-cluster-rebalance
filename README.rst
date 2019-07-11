@@ -52,7 +52,7 @@ or consumers. While it has worked for me without issue, your mileage may vary.
 CLI Usage
 ---------
 
-.. code:: bash
+.. code-block::
 
     usage: rmq-cluster-rebalance [-h] [-u USERNAME] [-p PASSWORD] [--vhost VHOST]
                                  [-L LOG_FILE] [-v] [--debug] [--version]
