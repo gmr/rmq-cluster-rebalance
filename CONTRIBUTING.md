@@ -4,14 +4,10 @@ To get setup in the environment and run the tests, take the following steps:
 
 ```bash
 python3 -m venv env
-. env/bin/activate
+source env/bin/activate
 pip install -r requires/testing.txt
-
 ./bootstrap  # Will setup docker containers for testing
-
-flake8
-nosetests
-mypy
+bin/test.sh  # Runs flake8, mypy, && nose
 ```
 
 ## Code Style

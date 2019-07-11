@@ -46,11 +46,7 @@ jobs:
           key: v1-dependencies-{{ checksum "requires/testing.txt" }}
       - run:
           name: run tests
-          command: |
-            . env/bin/activate
-            flake8 --output build/flake8/results.txt --tee --format=pylint
-            mypy rmq_cluster_rebalance --cobertura-xml-report build/mypy/results.xml
-            nosetests
+          command: bin/test.sh
       - run:
           name: upload coverage
           command: |
@@ -58,8 +54,7 @@ jobs:
             pip install codecov
             codecov  --file build/coverage.xml
       - store_artifacts:
-          path: ./build/
-          destination: prefix
+          path: build
   deploy:
     docker:
       - image: circleci/python:3.7

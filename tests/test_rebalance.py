@@ -69,7 +69,6 @@ class ExitApplicationTestCase(TestCase):
                 with self.assertRaises(AssertionError):
                     self.rebalance._apply_policy('foo', {'ha-mode': 'all'})
 
-
     def test_exit_called_on_delete_policy_connection_error(self):
         with mock.patch.object(self.rebalance.session, 'put') as put:
             put.side_effect = exceptions.ConnectionError
