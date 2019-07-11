@@ -58,7 +58,7 @@ then
 fi
 
 rm -rf build
-mkdir -p build/flake8 build/mypy build/nose
+mkdir -p build/coverage build/flake8 build/mypy build/nose
 
 # Stop any running instances and clean up after them, then pull images
 docker-compose down --volumes --remove-orphans

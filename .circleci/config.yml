@@ -52,8 +52,8 @@ jobs:
           command: |
             . env/bin/activate
             pip install codecov
-            codecov  --file build/coverage.xml
-      - store_artifacts:
+            codecov  --file build/coverage/results.xml
+      - store_test_results:
           path: build
   deploy:
     docker:
