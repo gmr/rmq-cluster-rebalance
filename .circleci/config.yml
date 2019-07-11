@@ -48,8 +48,8 @@ jobs:
           name: run tests
           command: |
             . env/bin/activate
-            flake8 --output build/flake8.txt --tee
-            mypy
+            flake8 --output build/flake8/results.txt --tee --format=pylint
+            mypy rmq_cluster_rebalance --cobertura-xml-report build/mypy/results.xml
             nosetests
       - run:
           name: upload coverage
@@ -57,6 +57,9 @@ jobs:
             . env/bin/activate
             pip install codecov
             codecov  --file build/coverage.xml
+      - store_artifacts:
+          path: ./build/
+          destination: prefix
   deploy:
     docker:
       - image: circleci/python:3.7
