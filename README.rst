@@ -84,7 +84,7 @@ CLI Usage
    :target: https://pypi.python.org/pypi/rmq-cluster-rebalance
    :alt: Package Version
 
-.. |Status| image:: https://img.shields.io/circleci/build/gh/gmr/rmq-cluster-rebalance/master.svg?token=
+.. |Status| image:: https://img.shields.io/circleci/build/gh/gmr/rmq-cluster-rebalance/master.svg?token=0865efa9d8c942005bda4e68caaca26eb13acaf5
    :target: https://circleci.com/gh/gmr/rmq-cluster-rebalance/tree/master
    :alt: Build Status
 
