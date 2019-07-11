@@ -14,7 +14,7 @@ Installation
 
 Why?
 ----
-When you specify the `queue master location <queue_master_location>`_ in RabbitMQ
+When you specify the `queue master location`_ in RabbitMQ
 with value of ``min-masters``, RabbitMQ will attempt to balance the distribution
 of the master locations for queues across the cluster. However, when you restart
 a RabbitMQ node in a cluster with HA queues, the master location for a queue on that
@@ -83,7 +83,7 @@ CLI Usage
       --debug               Extra verbose debug logging (default: False)
 
 
-.. _queue_master_location: https://www.rabbitmq.com/ha.html#master-migration-data-locality
+.. _queue master location: https://www.rabbitmq.com/ha.html#master-migration-data-locality
 
 .. |Version| image:: https://img.shields.io/pypi/v/rmq-cluster-rebalance.svg?
    :target: https://pypi.python.org/pypi/rmq-cluster-rebalance
