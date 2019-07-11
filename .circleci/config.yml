@@ -49,6 +49,7 @@ jobs:
           command: |
             . env/bin/activate
             flake8 --output build/flake8.txt --tee
+            mypy
             nosetests
       - run:
           name: upload coverage

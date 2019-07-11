@@ -8,4 +8,5 @@ flake8-quotes
 flake8-rst-docstrings
 flake8-sql
 flake8-tuple
+mypy
 nose
