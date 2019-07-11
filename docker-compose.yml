@@ -1,0 +1,43 @@
+version: '3.3'
+
+services:
+  rabbit1:
+    image: rabbitmq:management-alpine
+    hostname: rabbit1
+    healthcheck:
+      test: /opt/rabbitmq/sbin/rabbitmqctl status
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - 15672
+    environment:
+       RABBITMQ_ERLANG_COOKIE: testing
+  rabbit2:
+    image: rabbitmq:management-alpine
+    hostname: rabbit2
+    healthcheck:
+      test: /opt/rabbitmq/sbin/rabbitmqctl status
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - 15672
+    environment:
+       RABBITMQ_ERLANG_COOKIE: testing
+    volumes:
+      - ./bin:/tmp/bin
+  rabbit3:
+    image: rabbitmq:management-alpine
+    hostname: rabbit3
+    healthcheck:
+      test: /opt/rabbitmq/sbin/rabbitmqctl status
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - 15672
+    environment:
+       RABBITMQ_ERLANG_COOKIE: testing
+    volumes:
+      - ./bin:/tmp/bin
