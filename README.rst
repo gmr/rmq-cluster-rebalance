@@ -3,7 +3,7 @@ rmq-cluster-rebalance
 
 CLI application for rebalancing queues in a RabbitMQ cluster
 
-|Version| |Status| |Coverage| |License| |Docs|
+|Version| |Status| |Coverage| |License|
 
 Installation
 ------------
@@ -95,7 +95,3 @@ CLI Usage
 .. |License| image:: https://img.shields.io/pypi/l/rmq-cluster-rebalance.svg?
    :target: https://github.com/gmr/rmq-cluster-rebalance/blob/master/LICENSE
    :alt: BSD
-
-.. |Docs| image:: https://img.shields.io/readthedocs/rmq-cluster-rebalance.svg?
-   :target: https://rmq-cluster-rebalance.readthedocs.io/
-   :alt: Documentation Status
