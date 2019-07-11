@@ -157,14 +157,22 @@ class Rebalance:
             policies = result.json()
             if not result.ok:
                 exit_application('Error looking up policies: {}'.format(
-                    result.json()['reason']), 5)
+                    policies['reason']), 5)
             if any(p['name'] == self.POLICY_NAME for p in policies):
                 self._delete_policy()
             return max(p['priority'] for p in policies) if policies else 0
 
     def _lookup_nodes(self) -> typing.List[str]:
-        result = self.session.get(self._build_url('/api/nodes'))
-        return [node['name'] for node in result.json()]
+        try:
+            result = self.session.get(self._build_url('/api/nodes'))
+        except exceptions.ConnectionError as error:
+            exit_application('Error looking up nodes: {}'.format(error), 1)
+        else:
+            nodes = result.json()
+            if not result.ok:
+                exit_application('Error looking up nodes: {}'.format(
+                   nodes['reason']), 6)
+            return [node['name'] for node in nodes]
 
     def _node_assignment(self) -> str:
         return self.nodes[self.node_offset]
@@ -185,7 +193,7 @@ class Rebalance:
             result = response.json()
             if not response.ok:
                 exit_application('Error getting queues: {}'.format(
-                   result['reason']), 6)
+                   result['reason']), 7)
             for queue in result:
                 yield queue
 

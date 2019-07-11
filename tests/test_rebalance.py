@@ -57,11 +57,6 @@ class ExitApplicationTestCase(TestCase):
             ea.side_effect = AssertionError
             yield ea
 
-    def test_exit_called_on_policy_delete_error(self):
-        with self.exit_application():
-            with self.assertRaises(AssertionError):
-                self.rebalance._delete_policy()
-
     def test_exit_called_on_apply_policy_error(self):
         with self.exit_application():
             with self.assertRaises(AssertionError):
@@ -74,6 +69,19 @@ class ExitApplicationTestCase(TestCase):
                 with self.assertRaises(AssertionError):
                     self.rebalance._apply_policy('foo', {'ha-mode': 'all'})
 
+
+    def test_exit_called_on_delete_policy_connection_error(self):
+        with mock.patch.object(self.rebalance.session, 'put') as put:
+            put.side_effect = exceptions.ConnectionError
+            with self.exit_application():
+                with self.assertRaises(AssertionError):
+                    self.rebalance._delete_policy()
+
+    def test_exit_called_on_policy_delete_error(self):
+        with self.exit_application():
+            with self.assertRaises(AssertionError):
+                self.rebalance._delete_policy()
+
     def test_exit_called_on_get_queue_info_connection_error(self):
         with mock.patch.object(self.rebalance.session, 'get') as get:
             get.side_effect = exceptions.ConnectionError
@@ -85,6 +93,32 @@ class ExitApplicationTestCase(TestCase):
         with self.exit_application():
             with self.assertRaises(AssertionError):
                 self.rebalance._get_queue_info('foo')
+
+    def test_exit_called_on_lookup_max_priority_connection_error(self):
+        with mock.patch.object(self.rebalance.session, 'get') as get:
+            get.side_effect = exceptions.ConnectionError
+            with self.exit_application():
+                with self.assertRaises(AssertionError):
+                    self.rebalance._lookup_max_priority()
+
+    def test_exit_called_on_lookup_max_priority_request_error(self):
+        self.rebalance.session.auth = ('bad', 'credentials')
+        with self.exit_application():
+            with self.assertRaises(AssertionError):
+                self.rebalance._lookup_max_priority()
+
+    def test_exit_called_on_lookup_nodes_connection_error(self):
+        with mock.patch.object(self.rebalance.session, 'get') as get:
+            get.side_effect = exceptions.ConnectionError
+            with self.exit_application():
+                with self.assertRaises(AssertionError):
+                    self.rebalance._lookup_nodes()
+
+    def test_exit_called_on_lookup_nodes_request_error(self):
+        self.rebalance.session.auth = ('bad', 'credentials')
+        with self.exit_application():
+            with self.assertRaises(AssertionError):
+                self.rebalance._lookup_nodes()
 
     def test_exit_called_on_queues_connection_error(self):
         with mock.patch.object(self.rebalance.session, 'get') as get:
