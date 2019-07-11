@@ -15,30 +15,30 @@ Installation
 Why?
 ----
 When you specify the `queue master location <queue_master_location>`_ in RabbitMQ
-with value of `min-masters`, RabbitMQ will attempt to balance the distribution
+with value of ``min-masters``, RabbitMQ will attempt to balance the distribution
 of the master locations for queues across the cluster. However, when you restart
-(or upgrade) a RabbitMQ node in a cluster with HA queues, the master location for
-a queue will move to a different node. Given enough such events and depending on
-your HA policies, you can end up with an uneven distribution of queues with a master
-location on a minority of nodes. In this scenario, the nodes in cluster may not be
-utilized as evenly, with higher CPU, memory, disk, and network utilization on nodes
-who are carrying the larger quantity of master nodes.
+a RabbitMQ node in a cluster with HA queues, the master location for a queue on that
+node will move to a different node. Given enough such events and depending on your HA
+policies, you can end up with an uneven distribution of queues with a master location
+on a minority of nodes. In this scenario, the nodes in cluster may not be utilized
+as evenly, with higher CPU, memory, disk, and network utilization on nodes that
+carry the larger quantity of master nodes.
 
 Rebalancing queues across nodes can also be useful when adding nodes to a cluster
-with no `queue_master_locator` configuration set (which uses the default value of
-`client-local`), regardless of whether you use HA queues or not.
+with no ``queue_master_locator`` configuration set (which uses the default value of
+``client-local``), regardless of whether you use HA queues or not.
 
 Methodology
 -----------
 The application use the RabbitMQ management UI to iterate through each queue
-in the cluster. The queue is inspected and a policy named `rmq-cluster-rebalance`
+in the cluster. The queue is inspected and a policy named ``rmq-cluster-rebalance``
 is created using the existing policy configuration used by the queue with the
-addition or replacement of `ha-mode`, setting it to `all` and removing `ha-params`
-if it is set. Once the queue has fully replicated across all nodes in the cluster,
-the `rmq-cluster-rebalance` policy is replaced with a new policy that setting
-`ha-mode` to `nodes` and specifying only the new master node in `ha-params`. When
-the queue has fully moved, the policy will is then removed and the application
-will move on to the next queue.
+addition or replacement of ``ha-mode``, setting it to ``all`` and removing ``ha-params``
+and ``queue-master-locator`` if they are set. Once the queue has fully replicated
+across all nodes in the cluster, the ``rmq-cluster-rebalance`` policy is replaced
+with a new policy that setting ``ha-mode`` to ``nodes`` and specifying only the
+new master node in ``ha-params``. When the queue has fully moved, the policy will
+then removed and the application will move on to the next queue.
 
 Nodes are assigned in a simple round-robin ordering. If a queue is already living
 on the node where it would be assigned to, it will be skipped and no work is
@@ -48,6 +48,9 @@ Warning
 -------
 This approach should be safe for production use without interruption of publishers
 or consumers. While it has worked for me without issue, your mileage may vary.
+
+This application requires a relatively current version of RabbitMQ and was only
+tested with ``3.7.16``.
 
 CLI Usage
 ---------
